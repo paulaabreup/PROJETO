@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <windows.h>
+
+int main(){
+int y = 0; 
+ while(y <= 0){
+int sairjogo = 0;
+int opcao = 0;
+	
+system("cls");	
+printf("Menu Principal\n");
+printf("1 -Perguntas e Respostas\n");
+printf("2 -Cobra Na Caixa\n");
+printf("3 -Gousma\n");
+printf("4 -SAIR\n");
+scanf("%d", &opcao);
+
+switch(opcao){
+
+case 1:
+	
+	opcao = 0;
+	y = 1;
+	
+	while(sairjogo <= 0){
+		
+	system("cls");
+	printf("PERGUNTAS E RESPOSTAS\n");
+	printf(".\n");
+	printf(".\n");
+	printf("4 -Sair\n");
+	scanf("%d", &opcao);
+	
+	if(opcao == 4){
+		sairjogo = 1;
+		y = 0;
+	}
+	}
+	
+	break;
+case 2: 
+	
+	opcao = 0;
+	y = 1;
+	
+	while(sairjogo <= 0){
+	
+	system("cls");		
+	printf("COBRA NA CAIXA\n");
+	printf(".\n");
+	printf(".\n");
+	printf("4 -sair\n");
+	scanf("%d", &opcao); 
+	
+	if(opcao == 4){
+		sairjogo = 1;
+		y = 0;
+	}
+		}
+
+	break;
+case 3:
+	printf("GOUSMA\n");
+
+	break;
+case 4:
+	printf("SAINDO\n\n");
+	y = 2;
+	break;
+}
+}		
+return 0;
+
+}
