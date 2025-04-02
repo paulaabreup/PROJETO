@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define TOTAL_PERGUNTAS 5
+
+struct Pergunta {
+    char pergunta[200];
+    char opcoes[4][100];
+    char resposta;
+    char tentar_novamente;
+};
+
+int main() {
+   struct Pergunta quiz[TOTAL_PERGUNTAS] = {
+        {"Qual é a uva mais usada na produção de vinho tinto no mundo?",
+         {"a) Chardonnay", "b) Merlot", "c) Cabernet Sauvignon", "d) Syrah"},
+         'c'},
+        
+        {"Qual é o nome do recipiente tradicional usado na fermentação do vinho?",
+         {"a) Barril de carvalho", "b) Tanque de aço inoxidável", "c) Ânfora", "d) Todos os anteriores"},
+         'd'},
+
+        {"Qual processo transforma o suco de uva em vinho?",
+         {"a) Destilação", "b) Fermentação alcoólica", "c) Pasteurização", "d) Decantação"},
+         'b'},
+
+        {"Qual gás é liberado durante a fermentação do vinho?",
+         {"a) Oxigênio", "b) Metano", "c) Dióxido de carbono", "d) Nitrogênio"},
+         'c'},
+
+        {"Como é chamado o processo de envelhecimento do vinho em garrafa ou barril?",
+         {"a) Decantação", "b) Amadurecimento", "c) Clarificação", "d) Filtragem"},
+         'b'}
+    };
+
+    int pontuacao = 0;
+    char resposta;
+
+    printf("===== Jogo de Perguntas e Respostas sobre Fabricação de Vinhos =====\n\n");
+
+    for (int i = 0; i < TOTAL_PERGUNTAS; i++) {
+        printf("%d. %s\n", i + 1, quiz[i].pergunta);
+        for (int j = 0; j < 4; j++) {
+            printf("%s\n", quiz[i].opcoes[j]);
+        }
+        printf("Sua resposta: ");
+        scanf(" %c", &resposta);
+
+        if (resposta == quiz[i].resposta) {
+            printf("Correto!\n\n");
+            pontuacao++;
+        } else {
+            printf("Errado! A resposta correta era '%c'.\n\n", quiz[i].resposta);
+        }
+    }
+
+    printf("===== Fim do jogo! =====\n");
+    printf("Você acertou %d de %d perguntas.\n", pontuacao, TOTAL_PERGUNTAS);
+
+    return 0;
+}
