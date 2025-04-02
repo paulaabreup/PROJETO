@@ -9,7 +9,7 @@ Esse é um projeto avaliativo para os alunos do primeiro semestre de Engenharia 
 
 
 
-# FUNCIONALIDADES DOS MINI-JOGOS:
+# FUNCIONALIDADES E MECÂNICA  DOS MINI-JOGOS:
 
 -Perguntas e Respostas: 
 
@@ -22,8 +22,6 @@ No final, o jogador recebe sua pontuação e pode ,se quiser, tentar novamente p
 -Cobra na Caixa
 
 Introdução: O jogo Cobra na Caixa é uma experiência de suspense e estratégia ambientada em uma tumba egípcia misteriosa. Dois exploradores ficaram presos e precisam encontrar um botão escondido para escapar, evitando uma cobra mortal que também está escondida em uma das caixas. O jogo desafia a sorte e a estratégia dos jogadores, tornando-se uma experiência emocionante e imprevisível.
-
-# Mecânica do Jogo:
 
 1. Escolha de Personagem: Cada jogador seleciona um nome a partir de uma lista de sete opções predefinidas.
 
