@@ -7,12 +7,9 @@ Esse é um projeto avaliativo para os alunos do primeiro semestre de Engenharia 
 -Cobra na caixa
 -Gousma´s War
 
-RECURSOS USADOS:
-- Github
-- Falcom C++
-- Chat Gpt
 
-FUNCIONALIDADES DOS MINI-JOGOS:
+
+# FUNCIONALIDADES DOS MINI-JOGOS:
 
 -Perguntas e Respostas: 
 
@@ -26,7 +23,7 @@ No final, o jogador recebe sua pontuação e pode ,se quiser, tentar novamente p
 
 Introdução: O jogo Cobra na Caixa é uma experiência de suspense e estratégia ambientada em uma tumba egípcia misteriosa. Dois exploradores ficaram presos e precisam encontrar um botão escondido para escapar, evitando uma cobra mortal que também está escondida em uma das caixas. O jogo desafia a sorte e a estratégia dos jogadores, tornando-se uma experiência emocionante e imprevisível.
 
-Mecânica do Jogo:
+# Mecânica do Jogo:
 
 1. Escolha de Personagem: Cada jogador seleciona um nome a partir de uma lista de sete opções predefinidas.
 
@@ -87,6 +84,11 @@ O limite é de duas Gousmas por jogador, impedindo a criação excessiva de unid
 
 
 5. Opções Finais: No final da partida, o jogador pode escolher reiniciar o jogo ou retornar ao menu principal.
+
+# RECURSOS USADOS:
+- Github:usado para armazenar nossos códigos.
+- Falcom C++ :usado para fazer o código e compilar.
+- Chat Gpt:usado para pesquisas de variáveis e para correção de erros.
 
 
 
