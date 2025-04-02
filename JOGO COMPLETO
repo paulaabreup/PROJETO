@@ -1,0 +1,351 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <windows.h>
+#include <locale.h>
+
+int jogo1();
+int jogo2();
+int jogo3();
+int sairjogo = 0;
+int opcao = 0;
+
+
+void exibirCabecalho() {
+    system("cls");
+    printf("\n");
+    printf("=====================================\n");
+    printf("      MENU PRINCIPAL  \n");
+    printf("=====================================\n");
+    printf("\n");
+}
+
+
+void exibirMenu() {
+    exibirCabecalho();
+    printf("Escolha uma das opções abaixo:\n");
+    printf(" 1. Perguntas e Respostas\n");
+    printf(" 2. Cobra Na Caixa\n");
+    printf(" 3. Gousma\n");
+    printf(" 4. Sair\n");
+    printf("\n");
+    printf("Digite o número da opção: ");
+}
+
+int main() { 
+    setlocale(LC_ALL, "portuguese");
+
+    while (1) { 
+        exibirMenu(); 
+
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada inválida. Tente novamente.\n");
+            while (getchar() != '\n'); 
+            continue;
+        }
+        fflush(stdin);
+
+        switch (opcao) {
+            case 1: 
+                jogo1();
+                break;
+            case 2: 
+                jogo2();
+                break;
+            case 3:
+                jogo3();
+                break;
+            case 4: 
+                printf("Saindo do jogo...\n");
+                return 0;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+                system("pause");
+                break;
+        }
+    } 
+}
+
+int jogo1() {
+    while (1) {
+        system("cls");
+
+        #define TOTAL_PERGUNTAS 5
+        struct Pergunta {
+            char pergunta[200];
+            char opcoes[4][100];
+            char resposta;
+        };
+
+        struct Pergunta quiz[TOTAL_PERGUNTAS] = {
+            {"Qual é a uva mais usada na produção de vinho tinto no mundo?",
+             {"a) Chardonnay", "b) Merlot", "c) Cabernet Sauvignon", "d) Syrah"},
+             'c'},
+
+            {"Qual é o nome do recipiente tradicional usado na fermentação do vinho?",
+             {"a) Barril de carvalho", "b) Tanque de aço inoxidável", "c) Ânfora", "d) Todos os anteriores"},
+             'd'},
+
+            {"Qual processo transforma o suco de uva em vinho?",
+             {"a) Destilação", "b) Fermentação alcoólica", "c) Pasteurização", "d) Decantação"},
+             'b'},
+
+            {"Qual gás é liberado durante a fermentação do vinho?",
+             {"a) Oxigênio", "b) Metano", "c) Dióxido de carbono", "d) Nitrogênio"},
+             'c'},
+
+            {"Como é chamado o processo de envelhecimento do vinho em garrafa ou barril?",
+             {"a) Decantação", "b) Amadurecimento", "c) Clarificação", "d) Filtragem"},
+             'b'}
+        };
+
+        int pontuacao = 0;
+        char resposta;
+
+        printf("===== Jogo de Perguntas e Respostas sobre Fabricação de Vinhos =====\n\n");
+
+        for (int i = 0; i < TOTAL_PERGUNTAS; i++) {
+            printf("%d. %s\n", i + 1, quiz[i].pergunta);
+            for (int j = 0; j < 4; j++) {
+                printf("%s\n", quiz[i].opcoes[j]);
+            }
+
+            printf("Sua resposta: ");
+            if (scanf(" %c", &resposta) != 1) {
+                printf("Entrada inválida. Tente novamente.\n");
+                while (getchar() != '\n'); 
+                continue;
+            }
+
+            if (resposta == quiz[i].resposta) {
+                printf("\n Correto!\n\n");
+                pontuacao++;
+            } else {
+                printf("\n Errado! A resposta correta era '%c'.\n\n", quiz[i].resposta);
+            }
+            system("pause");
+            system("cls");
+        }
+
+        printf("===== Fim do jogo! =====\n");
+        printf("Você acertou %d de %d perguntas.\n", pontuacao, TOTAL_PERGUNTAS);
+        printf("1 - VOLTAR   2 - JOGAR NOVAMENTE\n");
+        printf("Escolha uma opção: ");
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada inválida. Tente novamente.\n");
+            while (getchar() != '\n'); 
+            continue;
+        }
+
+        if (opcao == 1) {
+            break;
+        } else if (opcao == 2) {
+            continue;
+        }
+    }
+}
+
+int jogo2() {
+    system("cls");
+    #define NUM_CAIXAS 5
+    #define NUM_NOMES 7
+
+    srand(time(0));
+
+    char *nomes[NUM_NOMES] = {"Soneca", "Dunga", "Dengoso", "Atchim", "Mestre", "Feliz", "Zangado"};
+    int botao, cobra, escolha, jogadorAtual;
+    char nomeJogadores[2][50];
+    int jogarNovamente = 1;
+
+    while (jogarNovamente) {
+        printf("Boa sorte no jogo Cobra na Caixa!\n");
+        printf("Escolha dois jogadores:\n");
+        for (int i = 0; i < NUM_NOMES; i++) {
+            printf("%d. %s\n", i + 1, nomes[i]);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            printf("Jogador %d, digite o número do seu nome: ", i + 1);
+            int escolhaNome;
+            if (scanf("%d", &escolhaNome) != 1) {
+                printf("Entrada inválida! Nome padrão atribuído.\n");
+                snprintf(nomeJogadores[i], 50, "Jogador %d", i + 1);
+                while (getchar() != '\n');
+            } else {
+                if (escolhaNome < 1 || escolhaNome > NUM_NOMES) {
+                    printf("Escolha inválida! Nome padrão atribuído.\n");
+                    snprintf(nomeJogadores[i], 50, "Jogador %d", i + 1);
+                } else {
+                    strcpy(nomeJogadores[i], nomes[escolhaNome - 1]);
+                }
+            }
+        }
+
+        printf("\nJogadores: %s e %s\n", nomeJogadores[0], nomeJogadores[1]);
+
+        jogadorAtual = rand() % 2;
+        printf("%s começa o jogo!\n", nomeJogadores[jogadorAtual]);
+
+        botao = rand() % NUM_CAIXAS;
+        do {
+            cobra = rand() % NUM_CAIXAS;
+        } while (cobra == botao);
+
+        int encontrou = 0;
+        while (!encontrou) {
+            printf("%s, escolha uma caixa (1 a %d): ", nomeJogadores[jogadorAtual], NUM_CAIXAS);
+            if (scanf("%d", &escolha) != 1) {
+                printf("Entrada inválida! Tente novamente.\n");
+                while (getchar() != '\n');
+                continue;
+            }
+
+            if (escolha < 1 || escolha > NUM_CAIXAS) {
+                printf("Escolha inválida. Tente novamente.\n");
+                continue;
+            }
+
+            escolha--;
+            if (escolha == botao) {
+                printf("Parabéns, %s! Você encontrou o botão, parabéns!\n", nomeJogadores[jogadorAtual]);
+                encontrou = 1;
+            } else if (escolha == cobra) {
+                printf("Poxa, %s! Você encontrou a cobra e perdeu o jogo!\n", nomeJogadores[jogadorAtual]);
+                encontrou = 1;
+            } else {
+                printf("A caixa está vazia. Continue e tente a sorte!\n");
+                jogadorAtual = 1 - jogadorAtual;
+            }
+        }
+
+        printf("Deseja jogar novamente? (1 para sim, 0 para não): ");
+        if (scanf("%d", &jogarNovamente) != 1) {
+            printf("Entrada inválida! Tente novamente.\n");
+            while (getchar() != '\n'); 
+            continue;
+        }
+
+        system("cls");
+    }
+}
+
+int jogo3() {
+    system("cls");
+    #define MAX_GOUSMAS 2
+    #define MAX_FURIA 5
+    typedef struct {
+        int furia;
+        int ativa;
+    } Gousma;
+
+    typedef struct {
+        Gousma gousmas[MAX_GOUSMAS];
+        int qtd;
+    } Jogador;
+
+    Jogador jogadores[2];
+    int turno = 0, opcao;
+
+    
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < MAX_GOUSMAS; i++) {
+            jogadores[j].gousmas[i].furia = 1;
+            jogadores[j].gousmas[i].ativa = 1;
+        }
+        jogadores[j].qtd = 2;
+    }
+
+    do {
+        while (1) {
+            system("cls");
+            printf("\n--- TURNO DO JOGADOR %d ---\n", turno + 1);
+
+           
+            for (int j = 0; j < 2; j++) {
+                printf("Jogador %d:\n", j + 1);
+                for (int i = 0; i < MAX_GOUSMAS; i++) {
+                    if (jogadores[j].gousmas[i].ativa)
+                        printf("  Gousma %d - Fúria: %d\n", i + 1, jogadores[j].gousmas[i].furia);
+                    else
+                        printf("  Gousma %d - [Desintegrada]\n", i + 1);
+                }
+            }
+
+            printf("\n1 - Atacar\n2 - Dividir Gousma\nEscolha sua ação: ");
+            int escolha;
+            if (scanf("%d", &escolha) != 1) {
+                printf("Entrada inválida! Tente novamente.\n");
+                while (getchar() != '\n');
+                continue;
+            }
+
+            if (escolha == 1) {
+                int a, d;
+                printf("Escolha sua Gousma para atacar (1 ou 2): ");
+                if (scanf("%d", &a) != 1) {
+                    printf("Entrada inválida. Tente novamente.\n");
+                    continue;
+                }
+                a--;
+                if (a < 0 || a >= MAX_GOUSMAS || !jogadores[turno].gousmas[a].ativa) {
+                    printf("Escolha inválida.\n");
+                    continue;
+                }
+
+                printf("Escolha a Gousma inimiga para atacar (1 ou 2): ");
+                if (scanf("%d", &d) != 1) {
+                    printf("Entrada inválida. Tente novamente.\n");
+                    continue;
+                }
+                d--;
+                if (d < 0 || d >= MAX_GOUSMAS || !jogadores[1 - turno].gousmas[d].ativa) {
+                    printf("Escolha inválida.\n");
+                    continue;
+                }
+
+                int furia_atacante = jogadores[turno].gousmas[a].furia;
+                jogadores[turno].gousmas[a].furia = 0;
+                jogadores[1 - turno].gousmas[d].furia += furia_atacante;
+
+                printf("Gousma inimiga agora tem %d de fúria!\n", jogadores[1 - turno].gousmas[d].furia);
+
+                if (jogadores[1 - turno].gousmas[d].furia > MAX_FURIA) {
+                    printf("Gousma inimiga desintegrou!\n");
+                    jogadores[1 - turno].gousmas[d].ativa = 0;
+                }
+            } else if (escolha == 2) {
+                int origem, destino;
+                printf("Escolha a Gousma que será dividida (1 ou 2): ");
+                if (scanf("%d", &origem) != 1) {
+                    printf("Entrada inválida. Tente novamente.\n");
+                    continue;
+                }
+                origem--;
+
+                if (origem < 0 || origem >= MAX_GOUSMAS || !jogadores[turno].gousmas[origem].ativa || jogadores[turno].gousmas[origem].furia < 2) {
+                    printf("Divisão inválida.\n");
+                    continue;
+                }
+
+                destino = jogadores[turno].qtd;
+                if (destino < MAX_GOUSMAS) {
+                    jogadores[turno].gousmas[destino] = jogadores[turno].gousmas[origem];
+                    jogadores[turno].gousmas[destino].furia /= 2;
+                    jogadores[turno].gousmas[origem].furia /= 2;
+
+                    jogadores[turno].qtd++;
+                    printf("Gousma dividida! Agora há uma nova Gousma.\n");
+                } else {
+                    printf("Não é possível dividir mais Gousmas.\n");
+                }
+            }
+
+            turno = 1 - turno;
+            printf("\nPressione Enter para continuar...\n");
+            getchar(); 
+            getchar(); 
+        }
+
+    } while (1);
+}
