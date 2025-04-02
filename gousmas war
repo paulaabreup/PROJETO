@@ -1,0 +1,155 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_GOUSMAS 2
+#define MAX_FURIA 5
+
+
+typedef struct {
+    int furia;
+    int ativa;
+} Gousma;
+
+typedef struct {
+    Gousma gousmas[MAX_GOUSMAS];
+    int qtd;
+} Jogador;
+
+
+void iniciar_jogador(Jogador *jogador) {
+    for (int i = 0; i < MAX_GOUSMAS; i++) {
+        jogador->gousmas[i].furia = 1;
+        jogador->gousmas[i].ativa = 1;
+    }
+    jogador->qtd = 2;
+}
+
+
+void mostrar_estado(Jogador jogador, int id) {
+    printf("Jogador %d:\n", id + 1);
+    for (int i = 0; i < MAX_GOUSMAS; i++) {
+        if (jogador.gousmas[i].ativa)
+            printf("  Gousma %d - Fúria: %d\n", i + 1, jogador.gousmas[i].furia);
+        else
+            printf("  Gousma %d - [Desintegrada]\n", i + 1);
+    }
+}
+
+
+int jogador_derrotado(Jogador *jogador) {
+    for (int i = 0; i < MAX_GOUSMAS; i++) {
+        if (jogador->gousmas[i].ativa) {
+            return 0; 
+        }
+    }
+    return 1; 
+}
+
+
+void atacar(Jogador *atacante, Jogador *defensor) {
+    int a, d;
+    printf("Escolha sua Gousma para atacar (1 ou 2): ");
+    scanf("%d", &a); a--;
+    if (a < 0 || a >= MAX_GOUSMAS || !atacante->gousmas[a].ativa) {
+        printf("Escolha inválida.\n");
+        return;
+    }
+
+    printf("Escolha a Gousma inimiga para atacar (1 ou 2): ");
+    scanf("%d", &d); d--;
+    if (d < 0 || d >= MAX_GOUSMAS || !defensor->gousmas[d].ativa) {
+        printf("Escolha inválida.\n");
+        return;
+    }
+
+    int furia_atacante = atacante->gousmas[a].furia;
+    atacante->gousmas[a].furia = 0;
+
+    defensor->gousmas[d].furia += furia_atacante;
+
+    printf("Gousma inimiga agora tem %d de fúria!\n", defensor->gousmas[d].furia);
+
+    if (defensor->gousmas[d].furia > MAX_FURIA) {
+        printf("Gousma inimiga desintegrou!\n");
+        defensor->gousmas[d].ativa = 0;
+    }
+}
+
+
+void dividir(Jogador *jogador) {
+    int origem, destino;
+    printf("Escolha a Gousma que será dividida (1 ou 2): ");
+    scanf("%d", &origem); origem--;
+
+    if (origem < 0 || origem >= MAX_GOUSMAS || !jogador->gousmas[origem].ativa || jogador->gousmas[origem].furia < 2) {
+        printf("Divisão inválida.\n");
+        return;
+    }
+
+    destino = (origem == 0) ? 1 : 0;
+    if (jogador->gousmas[destino].ativa) {
+        printf("Não há espaço para nova Gousma (máximo de duas).\n");
+        return;
+    }
+
+    int transferir = jogador->gousmas[origem].furia / 2;
+    jogador->gousmas[origem].furia -= transferir;
+    jogador->gousmas[destino].furia = transferir;
+    jogador->gousmas[destino].ativa = 1;
+
+    printf("Gousma dividida! Nova Gousma tem %d de fúria.\n", transferir);
+}
+
+
+void jogar() {
+    Jogador jogadores[2];
+    int turno = 0;
+    iniciar_jogador(&jogadores[0]);
+    iniciar_jogador(&jogadores[1]);
+
+    while (1) {
+        printf("\n--- TURNO DO JOGADOR %d ---\n", turno + 1);
+        mostrar_estado(jogadores[turno], turno);
+        mostrar_estado(jogadores[1 - turno], 1 - turno);
+
+        printf("\n1 - Atacar\n2 - Dividir Gousma\nEscolha sua ação: ");
+        int escolha;
+        scanf("%d", &escolha);
+
+        if (escolha == 1)
+            atacar(&jogadores[turno], &jogadores[1 - turno]);
+        else if (escolha == 2)
+            dividir(&jogadores[turno]);
+        else
+            printf("Ação inválida.\n");
+
+        if (jogador_derrotado(&jogadores[1 - turno])) {
+            printf("\nJogador %d venceu o jogo!\n", turno + 1);
+            break;
+        }
+
+        turno = 1 - turno;
+    }
+}
+
+
+int main() {
+    int opcao;
+
+    do {
+        printf("\n=== MENU PRINCIPAL ===\n");
+        printf("1 - Jogar\n2 - Sair\nEscolha: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1)
+            jogar();
+        else if (opcao == 2)
+            printf("Saindo do jogo...\n");
+        else
+            printf("Opção inválida.\n");
+
+    } while (opcao != 2);
+
+    return 0;
+}
