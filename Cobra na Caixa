@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#define NUM_CAIXAS 5
+#define NUM_NOMES 7
+
+
+ char *nomes[NUM_NOMES] = {"Soneca", "Dunga", "Dengoso", "Atchim", "Mestre", "Feliz", "Zangado"};
+
+void inicializarCaixas(int *botao, int *cobra) {
+    *botao = rand() % NUM_CAIXAS;
+    do {
+        *cobra = rand() % NUM_CAIXAS;
+    } while (*cobra == *botao); 
+}
+
+int main() {
+    srand(time(0));
+
+    int botao, cobra, escolha, jogadorAtual;
+    char nomeJogadores[2][50];
+    int jogarNovamente = 1;
+
+    while (jogarNovamente) {
+        printf("Boa sorte no jogo Cobra na Caixa!\n");
+        printf("Escolha dois jogadores:\n");
+        for (int i = 0; i < NUM_NOMES; i++) {
+            printf("%d. %s\n", i + 1, nomes[i]);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            printf("Jogador %d, digite o numero do seu nome: ", i + 1);
+            int escolhaNome;
+            scanf("%d", &escolhaNome);
+            if (escolhaNome < 1 || escolhaNome > NUM_NOMES) {
+                printf("Escolha invalida! Nome padrao atribuido.\n");
+                snprintf(nomeJogadores[i], 50, "Jogador %d", i + 1);
+            } else {
+                strcpy(nomeJogadores[i], nomes[escolhaNome - 1]);
+            }
+        }
+
+        printf("\nJogadores: %s e %s\n", nomeJogadores[0], nomeJogadores[1]);
+
+        
+        jogadorAtual = rand() % 2;
+        printf("%s comeca o jogo!\n", nomeJogadores[jogadorAtual]);
+
+        
+        inicializarCaixas(&botao, &cobra);
+
+        int encontrou = 0;
+        while (!encontrou) {
+            printf("%s, escolha uma caixa (1 a %d): ", nomeJogadores[jogadorAtual], NUM_CAIXAS);
+            scanf("%d", &escolha);
+
+            if (escolha < 1 || escolha > NUM_CAIXAS) {
+                printf("Escolha invalida. Tente novamente.\n");
+                continue;
+            }
+
+            escolha--; 
+            if (escolha == botao) {
+                printf("Parabens, %s! Voce encontrou o botao, parabens!\n", nomeJogadores[jogadorAtual]);
+                encontrou = 1;
+            } else if (escolha == cobra) {
+                printf("poxa, %s! Voce encontrou a cobra e perdeu o jogo!\n", nomeJogadores[jogadorAtual]);
+                encontrou = 1;
+            } else {
+                printf("A caixa esta vazia. continue e tente a sorte!\n");
+                jogadorAtual = 1 - jogadorAtual; 
+            }
+        }
+
+        printf("Deseja jogar novamente? (1 para sim, 0 para nao): ");
+        scanf("%d", &jogarNovamente);
+    }
+
+
+    return 0;
+}
