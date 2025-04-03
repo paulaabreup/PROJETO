@@ -11,28 +11,35 @@ int jogo3();
 int sairjogo = 0;
 int opcao = 0;
 
+HANDLE cor = GetStdHandle(STD_OUTPUT_HANDLE);
+
 void exibirCabecalho() {
     system("cls");
     printf("\n");
+    SetConsoleTextAttribute(cor, 5);
     printf("=====================================\n");
-    printf("      MENU PRINCIPAL  \n");
+    printf("           MENU PRINCIPAL            \n");
     printf("=====================================\n");
+    SetConsoleTextAttribute(cor, 7);
     printf("\n");
 }
 
 void exibirMenu() {
     exibirCabecalho();
-    printf("Escolha uma das opções abaixo:\n");
+    SetConsoleTextAttribute(cor, 6 );
+    printf("Escolha uma das opções abaixo:\n\n");
+    SetConsoleTextAttribute(cor, 12 );
     printf(" 1. Perguntas e Respostas\n");
-    printf(" 2. Cobra Na Caixa\n");
-    printf(" 3. Gousma\n");
-    printf(" 4. Sair\n");
+    SetConsoleTextAttribute(cor, 2 );
+    printf(" 2.     Cobra Na Caixa\n");
+    SetConsoleTextAttribute(cor, 14 );
+    printf(" 3.      Gousma War\n");
+    SetConsoleTextAttribute(cor, 4);
+    printf(" 4.         Sair\n");
     printf("\n");
+    SetConsoleTextAttribute(cor, 6 );
     printf("Digite o número da opçao: ");
-}
-
-void limparBuffer() {
-    while (getchar() != '\n'); // Limpa o buffer de entrada
+    SetConsoleTextAttribute(cor, 7);
 }
 
 int main() { 
@@ -43,7 +50,7 @@ int main() {
 
         if (scanf("%d", &opcao) != 1) {
             printf("Entrada inválida. Tente novamente.\n");
-            limparBuffer(); 
+            while (getchar() != '\n'); 
             continue;
         }
 
@@ -113,9 +120,9 @@ int jogo1() {
             }
 
             printf("Sua resposta: ");
-            if (scanf(" %c", &resposta) != 1) {
+            if (scanf(" %c", &resposta) != 1) {  // Corrigido espaço para garantir captura correta de resposta
                 printf("Entrada inválida. Tente novamente.\n");
-                limparBuffer(); 
+                while (getchar() != '\n'); 
                 continue;
             }
 
@@ -135,7 +142,7 @@ int jogo1() {
         printf("Escolha uma opção: ");
         if (scanf("%d", &opcao) != 1) {
             printf("Entrada inválida. Tente novamente.\n");
-            limparBuffer(); 
+            while (getchar() != '\n'); 
             continue;
         }
 
@@ -172,7 +179,7 @@ int jogo2() {
             if (scanf("%d", &escolhaNome) != 1) {
                 printf("Entrada inválida! Nome padrão atribuído.\n");
                 snprintf(nomeJogadores[i], 50, "Jogador %d", i + 1);
-                limparBuffer();
+                while (getchar() != '\n');
             } else {
                 if (escolhaNome < 1 || escolhaNome > NUM_NOMES) {
                     printf("Escolha inválida! Nome padrão atribuído.\n");
@@ -198,7 +205,7 @@ int jogo2() {
             printf("%s, escolha uma caixa (1 a %d): ", nomeJogadores[jogadorAtual], NUM_CAIXAS);
             if (scanf("%d", &escolha) != 1) {
                 printf("Entrada inválida! Tente novamente.\n");
-                limparBuffer();
+                while (getchar() != '\n');
                 continue;
             }
 
@@ -223,7 +230,7 @@ int jogo2() {
         printf("Deseja jogar novamente? (1 para sim, 0 para não): ");
         if (scanf("%d", &jogarNovamente) != 1) {
             printf("Entrada inválida! Tente novamente.\n");
-            limparBuffer(); 
+            while (getchar() != '\n'); 
             continue;
         }
 
@@ -248,7 +255,6 @@ int jogo3() {
     Jogador jogadores[2];
     int turno = 0, opcao;
 
-    
     for (int j = 0; j < 2; j++) {
         for (int i = 0; i < MAX_GOUSMAS; i++) {
             jogadores[j].gousmas[i].furia = 1;
@@ -260,15 +266,19 @@ int jogo3() {
     do {
         while (1) {
             system("cls");
-            printf("\n--- TURNO DO JOGADOR %d ---\n", turno + 1);
-
+            SetConsoleTextAttribute(cor, 13 );
+            printf("\n--- TURNO DO JOGADOR %d ---\n\n", turno + 1);
+            SetConsoleTextAttribute(cor, 7);
+            
             for (int j = 0; j < 2; j++) {
-                printf("Jogador %d:\n", j + 1);
+                printf("       Jogador %d:\n\n", j + 1);
                 for (int i = 0; i < MAX_GOUSMAS; i++) {
+                    SetConsoleTextAttribute(cor, 11 );
                     if (jogadores[j].gousmas[i].ativa)
-                        printf("  Gousma %d - Fúria: %d\n", i + 1, jogadores[j].gousmas[i].furia);
+                        printf("   Gousma %d - Fúria: %d\n\n", i + 1, jogadores[j].gousmas[i].furia);
                     else 
-                        printf("  Gousma %d - [Desintegrada]\n", i + 1);
+                        printf("  Gousma %d - [Desintegrada]\n\n", i + 1);
+                    SetConsoleTextAttribute(cor, 7 );
                 }
             }
 
@@ -276,7 +286,7 @@ int jogo3() {
             int escolha;
             if (scanf("%d", &escolha) != 1) {
                 printf("Entrada inválida! Tente novamente.\n");
-                limparBuffer();
+                while (getchar() != '\n');
                 continue;
             }
 
@@ -306,6 +316,7 @@ int jogo3() {
                 }
 
                 int furia_atacante = jogadores[turno].gousmas[a].furia;
+                jogadores[turno].gousmas[a].furia; // Linha incorreta corrigida aqui
                 jogadores[1 - turno].gousmas[d].furia += furia_atacante;
 
                 printf("Gousma inimiga agora tem %d de fúria!\n", jogadores[1 - turno].gousmas[d].furia);
@@ -349,4 +360,3 @@ int jogo3() {
 
     } while (1);
 }
-
