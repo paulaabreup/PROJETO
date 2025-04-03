@@ -11,7 +11,6 @@ int jogo3();
 int sairjogo = 0;
 int opcao = 0;
 
-
 void exibirCabecalho() {
     system("cls");
     printf("\n");
@@ -20,7 +19,6 @@ void exibirCabecalho() {
     printf("=====================================\n");
     printf("\n");
 }
-
 
 void exibirMenu() {
     exibirCabecalho();
@@ -33,6 +31,10 @@ void exibirMenu() {
     printf("Digite o número da opçao: ");
 }
 
+void limparBuffer() {
+    while (getchar() != '\n'); // Limpa o buffer de entrada
+}
+
 int main() { 
     setlocale(LC_ALL, "portuguese");
 
@@ -41,10 +43,9 @@ int main() {
 
         if (scanf("%d", &opcao) != 1) {
             printf("Entrada inválida. Tente novamente.\n");
-            while (getchar() != '\n'); 
+            limparBuffer(); 
             continue;
         }
-        fflush(stdin);
 
         switch (opcao) {
             case 1: 
@@ -60,7 +61,7 @@ int main() {
                 printf("Saindo do jogo...\n");
                 return 0;
             default:
-                printf("Opção errada ! Tente novamente.\n");
+                printf("Opção errada! Tente novamente.\n");
                 system("pause");
                 break;
         }
@@ -114,7 +115,7 @@ int jogo1() {
             printf("Sua resposta: ");
             if (scanf(" %c", &resposta) != 1) {
                 printf("Entrada inválida. Tente novamente.\n");
-                while (getchar() != '\n'); 
+                limparBuffer(); 
                 continue;
             }
 
@@ -134,7 +135,7 @@ int jogo1() {
         printf("Escolha uma opção: ");
         if (scanf("%d", &opcao) != 1) {
             printf("Entrada inválida. Tente novamente.\n");
-            while (getchar() != '\n'); 
+            limparBuffer(); 
             continue;
         }
 
@@ -171,7 +172,7 @@ int jogo2() {
             if (scanf("%d", &escolhaNome) != 1) {
                 printf("Entrada inválida! Nome padrão atribuído.\n");
                 snprintf(nomeJogadores[i], 50, "Jogador %d", i + 1);
-                while (getchar() != '\n');
+                limparBuffer();
             } else {
                 if (escolhaNome < 1 || escolhaNome > NUM_NOMES) {
                     printf("Escolha inválida! Nome padrão atribuído.\n");
@@ -197,7 +198,7 @@ int jogo2() {
             printf("%s, escolha uma caixa (1 a %d): ", nomeJogadores[jogadorAtual], NUM_CAIXAS);
             if (scanf("%d", &escolha) != 1) {
                 printf("Entrada inválida! Tente novamente.\n");
-                while (getchar() != '\n');
+                limparBuffer();
                 continue;
             }
 
@@ -222,7 +223,7 @@ int jogo2() {
         printf("Deseja jogar novamente? (1 para sim, 0 para não): ");
         if (scanf("%d", &jogarNovamente) != 1) {
             printf("Entrada inválida! Tente novamente.\n");
-            while (getchar() != '\n'); 
+            limparBuffer(); 
             continue;
         }
 
@@ -261,13 +262,12 @@ int jogo3() {
             system("cls");
             printf("\n--- TURNO DO JOGADOR %d ---\n", turno + 1);
 
-           
             for (int j = 0; j < 2; j++) {
                 printf("Jogador %d:\n", j + 1);
                 for (int i = 0; i < MAX_GOUSMAS; i++) {
                     if (jogadores[j].gousmas[i].ativa)
                         printf("  Gousma %d - Fúria: %d\n", i + 1, jogadores[j].gousmas[i].furia);
-                    else
+                    else 
                         printf("  Gousma %d - [Desintegrada]\n", i + 1);
                 }
             }
@@ -276,7 +276,7 @@ int jogo3() {
             int escolha;
             if (scanf("%d", &escolha) != 1) {
                 printf("Entrada inválida! Tente novamente.\n");
-                while (getchar() != '\n');
+                limparBuffer();
                 continue;
             }
 
@@ -290,6 +290,7 @@ int jogo3() {
                 a--;
                 if (a < 0 || a >= MAX_GOUSMAS || !jogadores[turno].gousmas[a].ativa) {
                     printf("Escolha inválida.\n");
+                    system("pause");
                     continue;
                 }
 
@@ -305,12 +306,11 @@ int jogo3() {
                 }
 
                 int furia_atacante = jogadores[turno].gousmas[a].furia;
-                jogadores[turno].gousmas[a].furia = 0;
                 jogadores[1 - turno].gousmas[d].furia += furia_atacante;
 
                 printf("Gousma inimiga agora tem %d de fúria!\n", jogadores[1 - turno].gousmas[d].furia);
 
-                if (jogadores[1 - turno].gousmas[d].furia > MAX_FURIA) {
+                if (jogadores[1 - turno].gousmas[d].furia >= MAX_FURIA) {
                     printf("Gousma inimiga desintegrou!\n");
                     jogadores[1 - turno].gousmas[d].ativa = 0;
                 }
@@ -349,3 +349,4 @@ int jogo3() {
 
     } while (1);
 }
+
