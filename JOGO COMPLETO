@@ -120,7 +120,7 @@ int jogo1() {
             }
 
             printf("Sua resposta: ");
-            if (scanf(" %c", &resposta) != 1) {  // Corrigido espaço para garantir captura correta de resposta
+            if (scanf(" %c", &resposta) != 1) {  
                 printf("Entrada inválida. Tente novamente.\n");
                 while (getchar() != '\n'); 
                 continue;
@@ -316,7 +316,7 @@ int jogo3() {
                 }
 
                 int furia_atacante = jogadores[turno].gousmas[a].furia;
-                jogadores[turno].gousmas[a].furia; // Linha incorreta corrigida aqui
+                jogadores[turno].gousmas[a].furia; 
                 jogadores[1 - turno].gousmas[d].furia += furia_atacante;
 
                 printf("Gousma inimiga agora tem %d de fúria!\n", jogadores[1 - turno].gousmas[d].furia);
